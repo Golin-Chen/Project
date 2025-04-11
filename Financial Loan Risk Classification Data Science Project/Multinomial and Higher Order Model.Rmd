@@ -1,0 +1,353 @@
+---
+title: "606 Multinomial"
+author: "TSW"
+date: "2025-02-20"
+output: html_document
+---
+```{r}
+install.packages("caret")
+install.packages("nnet")
+install.packages("smotefamily")
+install.packages("(DMwR")
+library(dplyr)
+library(nnet)
+library(caret)
+library(dplyr)
+library(MASS)
+library(caret)
+library(car)
+library(glmnet)
+```
+
+```{r}
+
+data <- read.csv("loan_data_606.csv")
+data <- data %>% select(-id)
+num_cols <- sapply(data, is.numeric)
+data[num_cols] <- scale(data[num_cols])
+head(data, 5)
+```
+
+```{r}
+cat_cols <- sapply(data, function(x) !is.numeric(x))
+data[cat_cols] <- lapply(data[cat_cols], as.factor)
+head(data, 5)
+```
+
+```{r}
+install.packages("fastDummies")
+library(fastDummies)
+
+new_data <- fastDummies::dummy_cols(data,
+                                             select_columns = c("sub_grade", "hardship_flag", "initial_list_status",
+                                                                "application_type", "home_ownership", "pymnt_plan"),
+                                             remove_first_dummy = TRUE, remove_selected_columns = TRUE)
+
+```
+
+```{r}
+ind<-createDataPartition(new_data$grade, p = .80, list = FALSE)
+training<-new_data[ind,]
+testing<-new_data[-ind,]
+head(training,5)
+```
+
+```{r}
+library(smotefamily)
+
+
+training$grade <- as.factor(training$grade)
+
+
+smote_output <- SMOTE(
+  X = training[, -which(names(training) == "grade")],
+  target = training$grade,
+  K = 5,
+  dup_size = 2
+)
+
+synth_data <- smote_output$syn_data
+colnames(synth_data)[ncol(synth_data)] <- "grade"
+
+balanced_data <- rbind(
+  training,
+  synth_data[, colnames(training)])
+
+table(balanced_data$grade)
+
+```
+
+```{r}
+balanced_data$grade <- as.factor(balanced_data$grade)
+balanced_data$grade<-relevel(balanced_data$grade,ref = "A")
+train_control <- trainControl(method = "cv", number =3)
+model <- train(grade ~ ., data = balanced_data, method = "multinom", trControl = train_control)
+```
+
+```{r}
+testing$grade <- as.factor(testing$grade)
+testing$grade<-relevel(testing$grade,ref = "A")
+test_pred <- predict(model,newdata=testing)
+conf_matrix=confusionMatrix(test_pred,testing$grade)
+conf_matrix
+```
+
+```{r}
+library(ggplot2)
+f1_scores <- as.data.frame(conf_matrix$byClass)
+f1_scores$Grade <- rownames(f1_scores)
+
+ggplot(f1_scores, aes(x = Grade, y = F1)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "F1 Score by Loan Grade", x = "Grade", y = "F1 Score") +
+  theme_minimal()
+
+```
+
+```{r}
+install.packages("pROC")
+library(pROC)
+
+test_probs <- predict(model, newdata = testing, type = "prob")
+roc_curves <- list()
+auc_values <- c()
+
+for (class in levels(testing$grade)) {
+    binary_labels <- ifelse(testing$grade == class, 1, 0)
+    roc_curves[[class]] <- roc(binary_labels, test_probs[, class])
+    auc_values[class] <- auc(roc_curves[[class]])
+}
+print(auc_values)
+plot(roc_curves[[1]], col = 1, lwd = 2, main = "Multiclass ROC Curve")
+for (i in 2:length(roc_curves)) {
+    plot(roc_curves[[i]], col = i, add = TRUE, lwd = 2)
+}
+legend("bottomright", legend = levels(testing$grade), col = 1:length(roc_curves), lwd = 2)
+
+```
+
+# Higher Order Linear Model 
+
+```{r}
+loan_data = read.csv("loan_data_606.csv")
+```
+
+```{r}
+set.seed(2025)
+loan_sample = loan_data[sample(1:nrow(loan_data), 100000),-1]
+```
+
+
+```{r}
+# Creating Avg variable
+loan_sample$fico_avg = (loan_sample$fico_range_high+loan_sample$fico_range_low)/2
+
+```
+
+## Plots
+
+```{r}
+# List of numeric columns
+numeric_columns <- names(loan_sample)[sapply(loan_sample, is.numeric)]
+
+# Create histograms for each variable
+for (col in numeric_columns) {
+  p <- ggplot(loan_sample, aes_string(x = col)) +
+    geom_histogram(bins = 30, fill = "blue", color = "black", alpha = 0.7) +
+    theme_minimal() +
+    labs(title = paste("Histogram of", col), x = col, y = "Frequency")
+  
+  print(p)
+}
+
+# Loop through each column to perform KS test and collect p-values
+ks_results <- data.frame(Variable = character(), P_Value = numeric(), stringsAsFactors = FALSE)
+for (col in numeric_columns) {
+
+  # Remove NA values as it produces an error & Normalizing the data (Z-score)
+  data <- na.omit(loan_sample[[col]])
+  data_scaled <- (data - mean(data)) / sd(data)
+  
+  # Perform KS test against standard normal distribution (pnorm)
+  ks_test <- ks.test(data_scaled, "pnorm")
+
+  ks_results <- rbind(ks_results, data.frame(Variable = col, P_Value = ks_test$p.value))
+}
+ks_results =as.data.frame(ks_results)
+
+```
+
+```{r}
+
+# Normalizing the data 
+# Exclude fico_avg from the normalization - this caused overfitting as the variance between variables became very small
+exclude_var <- "fico_avg"
+numeric_vars <- names(loan_sample)[sapply(loan_sample, is.numeric) & names(loan_sample) != exclude_var ]
+
+# Find the minimum value of each numeric variable
+min_values <- apply(loan_sample[, numeric_vars], 2, min)
+
+# Shift values if there are zeros or negatives
+shift_amount <- ifelse(min_values <= 0, abs(min_values) + 1e-5, 0)
+
+# Apply the shift to make all values positive
+loan_sample[, numeric_vars] <- loan_sample[, numeric_vars] + shift_amount
+
+# Apply Box-Cox transformation
+preprocess_params <- preProcess(loan_sample[, numeric_vars], method = "BoxCox")
+
+loan_sample[, numeric_vars] <- predict(preprocess_params, loan_sample[, numeric_vars])
+
+# Removing unnecessary variables that wont be used in the analysis
+
+loan_sample <- subset(loan_sample, select = -c(fico_range_high,fico_range_low, last_fico_range_high,last_fico_range_low))
+
+# citation: https://www.rdocumentation.org/packages/caret/versions/6.0-92/topics/preProcess
+```
+
+
+```{r}
+# Removing higher multicolinear variables 
+
+numeric_vars <- loan_sample[, sapply(loan_sample, is.numeric)]
+
+# Fit a model with only numeric variables
+model <- lm(fico_avg ~ ., data = numeric_vars)
+vif_scores <- vif(model)
+
+# Select numeric variables with VIF < 5 and removing the rest
+Variables <- names(vif_scores[vif_scores < 5])
+
+loan_sample <- loan_sample %>%
+  mutate(across(c(grade,home_ownership,pymnt_plan,initial_list_status, application_type,hardship_flag ), as.factor))
+
+factor_vars <- names(loan_sample[, sapply(loan_sample, is.factor)])
+
+# Keep selected numeric variables, factor variables, and the target variable
+loan_sample <- loan_sample[, names(loan_sample) %in% c(Variables, factor_vars, "fico_avg")]
+
+# Dummy coding the variables
+loan_sample$pymnt_plan = ifelse(loan_sample$pymnt_plan == "y", 1, 0)
+loan_sample$initial_list_status = ifelse(loan_sample$initial_list_status == "w", 1, 0)
+loan_sample$application_type = ifelse(loan_sample$application_type == "Joint App", 1, 0)
+loan_sample$hardship_flag =  ifelse(loan_sample$hardship_flag == "N", 0, 1)
+
+```
+
+```{r}
+loan_sample_training = loan_sample[1:80000, ]
+loan_sample_testing = loan_sample[80001:100000, ]
+```
+
+
+```{r}
+
+X <- model.matrix(fico_avg ~., data = loan_sample_training)[, -1]
+y <- loan_sample_training$fico_avg
+
+# 10-fold CV
+train_control <- trainControl(method = "cv", number = 10)
+
+# Train LASSO with cross-validation
+lasso_model <- train(
+  x = X, 
+  y = y, 
+  method = "glmnet", 
+  trControl = train_control, 
+  preProcess = c("center", "scale"),  # Standardize data
+  tuneLength = 30  # Searches across 30 lambda values, found this to be ideal
+)
+
+# Best lambda (penalty) from cross-validation
+best_lambda <- lasso_model$bestTune$lambda
+
+final_lasso <- glmnet(X, y, alpha = 1, lambda = best_lambda)
+
+lasso_coefficients <- coef(final_lasso)
+```
+
+
+```{r}
+lasso_coefs <- coef(final_lasso, s = best_lambda)
+selected_features <- rownames(lasso_coefs)[lasso_coefs[,1] != 0]
+# Remove intercept 
+# selecting best variables 
+selected_features <- selected_features[-1] 
+
+
+selected_features <- c("grade", "home_ownership", "delinq_2yrs", "inq_last_6mths", 
+                       "initial_list_status", "total_rec_int", "last_pymnt_amnt", 
+                       "collections_12_mths_ex_med", "application_type", "tot_coll_amt", 
+                       "acc_open_past_24mths", "bc_open_to_buy", "chargeoff_within_12_mths", 
+                       "delinq_amnt", "mo_sin_old_il_acct", "mo_sin_old_rev_tl_op", 
+                       "mo_sin_rcnt_rev_tl_op", "mo_sin_rcnt_tl", "mort_acc", 
+                       "mths_since_recent_bc", "num_accts_ever_120_pd", "num_tl_120dpd_2m", 
+                       "num_tl_90g_dpd_24m", "num_tl_op_past_12m", "pct_tl_nvr_dlq", 
+                       "percent_bc_gt_75", "pub_rec_bankruptcies")
+
+formula <- as.formula(paste("fico_avg", "~", paste(selected_features, collapse = " + ")))
+
+# Fit the linear regression model on best lasso model 
+model <- lm(formula, data = loan_sample_training)
+
+summary(model)
+length(selected_features)
+
+```
+
+
+```{r}
+# testing the linear model on test 
+prediction = predict(model, loan_sample_testing, type = "response")
+actuals <- loan_sample_testing$fico_avg
+rmse <- sqrt(mean((prediction - actuals)^2))
+cat("RMSE on test data:", rmse, "\n")
+```
+
+
+```{r}
+model <- lm(formula, data = loan_sample_training) 
+X_train <- model.matrix(model2)[, -1]
+y_train <- loan_sample_training$fico_avg
+# Loop through each predictor and plot against y_train
+for (i in 1:ncol(X_train)) {
+  plot(X_train[, i], y_train,
+       main = colnames(X_train)[i],
+       xlab = colnames(X_train)[i],
+       ylab = "fico_avg",
+       pch = 19, 
+       col = rgb(0, 0, 1, 0.5))
+}
+```
+```{r}
+model2 = lm(fico_avg ~ grade + home_ownership + delinq_2yrs + inq_last_6mths + 
++ initial_list_status + poly(last_pymnt_amnt,4) + collections_12_mths_ex_med + 
++     application_type + poly(tot_coll_amt,6) + acc_open_past_24mths + 
++     poly(bc_open_to_buy,4) + chargeoff_within_12_mths  + delinq_2yrs + 
++     poly(mo_sin_old_il_acct,4) + poly(mo_sin_old_rev_tl_op,4) + poly(mo_sin_rcnt_rev_tl_op,5) + 
++     mo_sin_rcnt_tl + mort_acc + poly(mths_since_recent_bc,2) + num_accts_ever_120_pd + 
++     num_tl_120dpd_2m + num_tl_90g_dpd_24m + num_tl_op_past_12m + 
++     poly(pct_tl_nvr_dlq,14) + poly(percent_bc_gt_75,2) + pub_rec_bankruptcies, data = loan_sample_training)
+
+summary(model2)
+```
+
+```{r}
+prediction = predict(model2, loan_sample_training, type = "response")
+actuals <- loan_sample_training$fico_avg
+rmse <- sqrt(mean((prediction - actuals)^2))
+cat("RMSE on train data:", rmse, mse, "\n")
+
+
+prediction = predict(model2, loan_sample_testing, type = "response")
+actuals <- loan_sample_testing$fico_avg
+rmse <- sqrt(mean((prediction - actuals)^2))
+cat("RMSE on test data:", rmse,"\n")
+
+ss_total <- sum((loan_sample_testing$fico_avg - mean(loan_sample_testing$fico_avg))^2)
+ss_residual <- sum((loan_sample_testing$fico_avg - prediction)^2)
+r_squared <- 1 - (ss_residual / ss_total)
+cat("R-squared:", r_squared, "\n")
+```
+
+```
