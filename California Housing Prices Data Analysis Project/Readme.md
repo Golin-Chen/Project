@@ -47,5 +47,4 @@ These tools enabled end-to-end data handling, from loading and preprocessing to 
 
 ---
 
-## 📊 Project Structure
 
