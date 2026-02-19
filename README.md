@@ -23,10 +23,10 @@ My approach combines advanced predictive modeling with a deep understanding of m
 Navigate through my work below to see how I apply data science to real-world business challenges:
 
 ### 🏠 Economics & Real Estate
-* **[Canadian Housing Affordability Index](./Canadian%20housing%20affordability%20index%20DATA%20ANALYSIS%20PROJECT)**
+* **[Canadian Housing Affordability Index](./Canadian%20housing%20affordability%20index%20Data%20Analysis%20Project)**
     * *What it is:* A multiple regression forecasting model analyzing macroeconomic drivers from Bank of Canada and StatCan.
     * *Outcome:* Achieved a 97.25% Adjusted R-Squared for pricing sensitivity insights.
-* **[California Housing Prices Analysis](./California%20Housing%20Prices%20DATA%20ANALYSIS%20PROJECT)**
+* **[California Housing Prices Analysis](./California%20Housing%20Prices%20Data%20Analysis%20Project)**
     * *What it is:* Exploratory data analysis and predictive modeling focused on geographic and demographic housing trends.
 
 ### 💰 Finance & Risk Management
