@@ -7,7 +7,7 @@
 ## 👋 About Me
 I am a **Business Data Analyst and Data Scientist** currently pursuing my **Master of Data Science** at the University of Calgary (GPA 3.9/4.0). With a foundational **Bachelor of Commerce** in Business Technology Management, I specialize in translating technical data outputs into actionable Business Requirements Documents (BRD) and strategic insights.
 
-My approach combines advanced predictive modeling with a deep understanding of market dynamics—whether it's forecasting housing affordability with **97.25% accuracy** or managing real-time ETL pipelines that scrape **2GB of data per hour**.
+My approach combines advanced predictive modeling with a deep understanding of market dynamics—whether it's forecasting housing affordability with **97.25% accuracy** or managing real-time ETL pipelines that scrape **500GB+ of data per week**.
 
 ---
 
