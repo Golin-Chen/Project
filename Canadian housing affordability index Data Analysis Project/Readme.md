@@ -44,27 +44,4 @@ The analysis was completed using:
 
 These technologies support an end-to-end analytical workflow from raw datasets to visual insights.
 
----
-
-## 🧪 Key Results & Insights
-
-- Completed detailed **exploratory analysis** of housing features and distributions.
-- Built baseline regression models and evaluated predictive performance.
-- Identified **key features** that strongly influence median house values.
-- Visualized relationships between features and target variables.
-
-These results reinforce foundational skills in **data cleaning, model building, evaluation, and visualization** — essential competencies for data analytics and machine learning roles.
-
----
-
-## 📈 What You Can Learn from This
-
-This project is a strong example of how to approach a real-world regression problem:
-
-1. **Understand your data** before modeling.
-2. **Preprocess systematically** — handle missing values, normalize where necessary.
-3. **Select and evaluate models** based on meaningful metrics.
-4. **Communicate findings visually** to make insights accessible.
-
----
 
