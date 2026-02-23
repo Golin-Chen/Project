@@ -58,4 +58,5 @@ Navigate through my work below to see how I apply data science to real-world bus
 ## 📫 Let's Connect!
 I'm always open to discussing data-driven optimization or financial modeling. 
 * **Email:** Guolinc10@gmail.com
+* **Linkedin:** https://www.linkedin.com/in/guolinc10/
 * **Location:** Calgary, AB
