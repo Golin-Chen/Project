@@ -36,7 +36,7 @@ Navigate through my work below to see how I apply data science to real-world bus
     * *What it is:* Risk-adjusted allocation strategies using Mean-Variance Optimization and Monte Carlo simulations.
 
 ### 📊 Business Automation
-* **[PythonPanda Dashboard Project](./PythonPanda%20Dashboard%20Project)**
+* **[MS PowerBI Dashboard Project](./Amazon%20Sales%20Data%20Power%20BI%20Dashboard%20Project)**
     * *What it is:* Interactive data visualization and dashboarding to streamline business reporting.
 
 ---
