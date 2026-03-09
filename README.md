@@ -215,7 +215,8 @@ Python, Pandas, Data Visualization, Exploratory Data Analysis
 
 # 🎓 Education & Certifications
 
-### 🎓 Master of Data Science  
+### 🎓 Master of Science - Data Science and Analytics
+Specializing in Financial and Energy Markets Data Modelling
 **University of Calgary**  
 Expected Completion: October 2025
 
