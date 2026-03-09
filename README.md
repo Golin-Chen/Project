@@ -7,9 +7,9 @@
 ---
 
 # 👋 About Me
-I am a **Business Data Analyst and Data Scientist** currently pursuing my **Master of Data Science at the University of Calgary (GPA: 3.9/4.0)**. My academic and professional background combines **business strategy, financial modeling, and advanced data science**.
+I am a **Business Data Analyst and Data Scientist**, a recent graduate in the **Master of Data Science at the University of Calgary (GPA: 3.9/4.0)**. My academic and professional background combines **business strategy, financial modeling, and advanced data science**.
 
-With a **Bachelor of Commerce in Business Technology Management**, I specialize in translating complex analytical outputs into **clear business insights, technical documentation, and Business Requirements Documents (BRDs)** that support strategic decision-making.
+With a **Bachelor of Commerce in Business Technology Management**, I specialize in translating complex datasets and analytical outputs into **clear business insights, technical documentation, and Business Requirements Documents (BRDs)** that support strategic decision-making.
 
 My work focuses on applying **machine learning, predictive analytics, and data visualization** to solve real-world business problems—from forecasting housing affordability with **97%+ predictive accuracy** to building **interactive dashboards and financial risk models**.
 
@@ -21,7 +21,7 @@ This repository contains a collection of **data science, financial analytics, an
 
 ### Data Science & Analytics
 - **Python:** Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
-- **R Programming**
+- **R Programming** 
 - **Machine Learning:** Regression Models, SVM, LASSO, Decision Trees, Classification Models
 - **Statistical Analysis:** Hypothesis Testing, Regression Analysis, Predictive Modeling
 
