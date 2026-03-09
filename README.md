@@ -217,6 +217,7 @@ Python, Pandas, Data Visualization, Exploratory Data Analysis
 
 ### 🎓 Master of Science - Data Science and Analytics
 Specializing in Financial and Energy Markets Data Modelling
+
 **University of Calgary**  
 
 
