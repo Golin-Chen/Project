@@ -173,6 +173,21 @@ Analyzes **customer shopping behavior** to identify opportunities for targeted m
 
 ---
 
+### 🔁 Customer Repeat Purchase & Retention SQL Analysis
+🔗 **[View Project](https://github.com/Golin-Chen/Project/tree/main/Customer%20Repeat%20Purchase%20Retention%20SQL%20Analysis%20Project)**
+
+**What's This About?**  
+Uses **SQL to analyze customer purchasing behavior** and identify what drives repeat purchases, helping businesses understand and improve customer retention.
+
+**Key Results** ✨
+- Segmented customers by **purchase frequency and repeat buying patterns**
+- Calculated **retention and repeat purchase rates** using SQL queries
+- Surfaced **cohorts and behaviors most linked to long-term customer loyalty**
+
+**Tools Used:** SQL, Data Querying, Customer Segmentation, Retention Analysis
+
+---
+
 # 📈 Professional Highlights
 
 ✅ **Predictive Modeling:** Built models achieving **97%+ accuracy** for forecasting housing affordability  
@@ -180,6 +195,7 @@ Analyzes **customer shopping behavior** to identify opportunities for targeted m
 ✅ **Financial Analysis:** Implemented portfolio optimization and Monte Carlo simulations for investment analysis  
 ✅ **Business Intelligence:** Designed interactive dashboards enabling stakeholders to monitor KPIs and sales trends  
 ✅ **Marketing Analytics:** Conducted e-commerce analysis to uncover customer behavior patterns  
+✅ **Customer Analytics:** Used SQL to analyze repeat purchase behavior and customer retention trends  
 ✅ **Data Engineering:** Managed multi-source data pipelines and ETL workflows for analytics  
 ✅ **Credit Analysis:** Evaluated commercial lending opportunities using comprehensive risk frameworks  
 
