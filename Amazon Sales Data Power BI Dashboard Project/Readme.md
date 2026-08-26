@@ -4,7 +4,7 @@
 
 This project uses **Microsoft Power BI** to build an **interactive sales dashboard** that provides analytics and insights from Amazon sales data. The purpose of this dashboard is to help users easily explore sales trends, key metrics, and performance patterns across products, time periods, regions, and customer segments using visuals and interactive controls.
 
-By transforming raw sales data into compelling visual stories, this project demonstrates skills in data cleaning, business intelligence reporting, and dashboard design — all valuable for analytics and BI roles. :contentReference[oaicite:0]{index=0}
+By transforming raw sales data into compelling visual stories, this project demonstrates skills in data cleaning, business intelligence reporting, and dashboard design — all valuable for analytics and BI roles. 
 
 ---
 
