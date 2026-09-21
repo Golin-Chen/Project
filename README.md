@@ -15,43 +15,6 @@ My work focuses on applying **machine learning, predictive analytics, and data v
 
 This repository contains a collection of **data science, financial analytics, and business intelligence projects** demonstrating my technical and analytical capabilities. 🚀
 
----
-
-# 🛠 Technical Toolbox
-
-### 📈 Data Science & Analytics
-- **Python:** Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
-- **R Programming** 
-- **Machine Learning:** Regression Models, SVM, LASSO, Decision Trees, Classification Models
-- **Statistical Analysis:** Hypothesis Testing, Regression Analysis, Predictive Modeling
-
-### 🗄️ Data Management
-- **SQL**
-- **ETL Pipeline Development**
-- **Data Cleaning & Data Wrangling**
-- **Exploratory Data Analysis (EDA)**
-
-### 📊 Business Intelligence & Visualization
-- **Power BI**
-- **Tableau**
-- **Microsoft Excel (Advanced Analytics)**
-- **Dashboard Design and KPI Reporting**
-
-### 💰 Finance & Quantitative Modeling
-- **Portfolio Optimization**
-- **Monte Carlo Simulations**
-- **Risk Modeling**
-- **Financial Forecasting**
-- **Credit Analysis & Underwriting**
-
-### 🔧 Additional Tools
-- **Git & GitHub**
-- **Jupyter Notebook**
-- **Power Query**
-- **DAX (Power BI)**
-
----
-
 # 📂 Project Directory
 Below is a collection of projects demonstrating how I apply **data science, machine learning, financial analytics, and business intelligence techniques** to real-world datasets.
 
@@ -185,6 +148,41 @@ Uses **SQL to analyze customer purchasing behavior** and identify what drives re
 - Surfaced **cohorts and behaviors most linked to long-term customer loyalty**
 
 **Tools Used:** SQL, Data Querying, Customer Segmentation, Retention Analysis
+
+---
+
+# 🛠 Technical Toolbox
+
+### 📈 Data Science & Analytics
+- **Python:** Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
+- **R Programming** 
+- **Machine Learning:** Regression Models, SVM, LASSO, Decision Trees, Classification Models
+- **Statistical Analysis:** Hypothesis Testing, Regression Analysis, Predictive Modeling
+
+### 🗄️ Data Management
+- **SQL**
+- **ETL Pipeline Development**
+- **Data Cleaning & Data Wrangling**
+- **Exploratory Data Analysis (EDA)**
+
+### 📊 Business Intelligence & Visualization
+- **Power BI**
+- **Tableau**
+- **Microsoft Excel (Advanced Analytics)**
+- **Dashboard Design and KPI Reporting**
+
+### 💰 Finance & Quantitative Modeling
+- **Portfolio Optimization**
+- **Monte Carlo Simulations**
+- **Risk Modeling**
+- **Financial Forecasting**
+- **Credit Analysis & Underwriting**
+
+### 🔧 Additional Tools
+- **Git & GitHub**
+- **Jupyter Notebook**
+- **Power Query**
+- **DAX (Power BI)**
 
 ---
 
