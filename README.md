@@ -15,6 +15,8 @@ My work focuses on applying **machine learning, predictive analytics, and data v
 
 This repository contains a collection of **data science, financial analytics, and business intelligence projects** demonstrating my technical and analytical capabilities. 🚀
 
+---
+
 # 📂 Project Directory
 Below is a collection of projects demonstrating how I apply **data science, machine learning, financial analytics, and business intelligence techniques** to real-world datasets.
 
